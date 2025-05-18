@@ -1,0 +1,21 @@
+@keyframes inhale {
+  0% { transform: scale(1); }
+  100% { transform: scale(1.2); }
+}
+
+@keyframes exhale {
+  0% { transform: scale(1.2); }
+  100% { transform: scale(1); }
+}
+
+.inhale-animation {
+  animation: inhale 4s ease-in-out forwards;
+}
+
+.exhale-animation {
+  animation: exhale 4s ease-in-out forwards;
+}
+
+.hold-phase {
+  transform: scale(1.2); // same as end of inhale
+}

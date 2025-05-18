@@ -1,0 +1,28 @@
+<div class="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50" (click)="close.emit()">
+  <div class="bg-white dark:bg-gray-900 p-6 rounded-xl shadow-2xl w-full max-w-md text-center animate-fade-in-up"
+    (click)="$event.stopPropagation()">
+    <h2 class="text-xl font-bold mb-4 text-gray-800 dark:text-white">Choose Your Session</h2>
+
+
+    <div class="flex flex-col gap-4">
+      <button (click)="handleSelection('stretch')"
+        class="bg-purple-500 hover:bg-purple-600 text-white font-semibold px-4 py-2 rounded-full transition">
+        🧘 Stretch
+      </button>
+
+      <button (click)="handleSelection('breathing')"
+        class="bg-blue-500 hover:bg-blue-600 text-white font-semibold px-4 py-2 rounded-full transition">
+        🌬️ Breathe
+      </button>
+
+      <button (click)="handleSelection('journal')"
+        class="bg-green-500 hover:bg-green-600 text-white font-semibold px-4 py-2 rounded-full transition">
+        📓 Journal
+      </button>
+    </div>
+
+    <button (click)="close.emit()" class="mt-6 text-sm text-gray-500 hover:underline">
+      Cancel
+    </button>
+  </div>
+</div>

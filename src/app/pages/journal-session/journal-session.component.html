@@ -1,0 +1,34 @@
+<div
+    class="min-h-screen bg-gradient-to-br from-pink-100 to-white dark:from-gray-800 dark:to-gray-900 text-gray-800 dark:text-white flex flex-col items-center justify-center p-6">
+
+    <div *ngIf="!submitted" class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-xl max-w-xl w-full text-center">
+        <h2 class="text-2xl font-bold mb-4">📓 Journal Prompt</h2>
+        <p class="mb-4 text-sm text-gray-600 dark:text-gray-300">
+            What was the most eventful thing in the last 24 hours?
+        </p>
+
+        <textarea [(ngModel)]="journalText" rows="6" placeholder="Type your thoughts here..."
+            class="w-full p-4 rounded-lg border border-gray-300 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-cyan-500 bg-gray-50 dark:bg-gray-700 text-gray-800 dark:text-white"></textarea>
+
+        <button (click)="submitted = true"
+            class="mt-4 bg-cyan-500 text-white px-6 py-2 rounded-full hover:bg-cyan-600 transition">
+            Submit
+        </button>
+    </div>
+
+    <div *ngIf="submitted" class="flex flex-col items-center">
+        <ng-lottie [options]="{
+          path: 'assets/lottie/thumbs-up.json'
+        }" style="width: 200px; height: 200px;"></ng-lottie>
+
+        <p class="text-lg font-semibold mt-4">Thank you for journaling today ✨</p>
+
+        <!-- <app-session-summary
+        [duration]="0"
+        [reps]="0"
+      ></app-session-summary> -->
+        <a routerLink="/" class="mt-4 text-sm text-cyan-600 dark:text-cyan-400 hover:underline">
+            ← Back to Home
+        </a>
+    </div>
+</div>

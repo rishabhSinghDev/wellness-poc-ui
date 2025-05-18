@@ -1,0 +1,87 @@
+<!-- home.component.html -->
+<div class="min-h-screen bg-[#fefefe] dark:bg-[#1e1e2f] text-[#4a4a4a] dark:text-[#f4f4f4] px-6 pt-24 pb-12 font-sans overflow-x-hidden">
+
+  <!-- Floating Avatar -->
+  <div class="fixed top-6 left-6 z-50 w-36 h-36 transition-all duration-700">
+    <ng-lottie [options]="lottieOptions" style="width: 100%; height: auto;"></ng-lottie>
+  </div>
+
+  <div class="flex flex-col items-center gap-16">
+
+    <!-- Greeting Section -->
+    <div class="text-center transition-opacity duration-1000"
+      [ngClass]="{ 'opacity-100': greetingVisible, 'opacity-0': !greetingVisible }">
+      <h1
+        class="text-[clamp(2rem,8vw,4rem)] font-medium tracking-wide text-slate-800 dark:text-white"
+        style="font-family: 'Dancing Script', cursive;"
+      >
+        Hi there, welcome back 👋
+      </h1>
+    </div>
+
+    <!-- Completed Tasks Table -->
+    <div class="w-full max-w-5xl transition-opacity duration-1000"
+      [ngClass]="{ 'opacity-100': completedVisible, 'opacity-0': !completedVisible }">
+      <h2 class="text-2xl font-bold mb-4">✅ Completed Tasks</h2>
+      <div class="bg-white/5 dark:bg-white/5 backdrop-blur-2xl shadow-[0_8px_32px_0_rgba(31,38,135,0.37)] ring-1 ring-white/20 border border-white/20 rounded-xl p-6 overflow-x-auto">
+        <table class="w-full text-left text-sm table-auto border-collapse">
+          <thead>
+            <tr class="text-gray-600 dark:text-gray-300 border-b border-gray-300">
+              <th class="py-2 px-4">Activity</th>
+              <th class="py-2 px-4">Time</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="border-b border-gray-200 dark:border-gray-700">
+              <td class="py-3 px-4">Stretch</td>
+              <td class="py-3 px-4">5 PM</td>
+            </tr>
+            <tr>
+              <td class="py-3 px-4">Breathing</td>
+              <td class="py-3 px-4">—</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Upcoming Tasks Table -->
+    <div class="w-full max-w-5xl transition-opacity duration-1000"
+      [ngClass]="{ 'opacity-100': upcomingVisible, 'opacity-0': !upcomingVisible }">
+      <h2 class="text-2xl font-bold mb-4">📅 Upcoming Tasks</h2>
+      <div class="bg-white/5 dark:bg-white/5 backdrop-blur-2xl shadow-[0_8px_32px_0_rgba(31,38,135,0.37)] ring-1 ring-white/20 border border-white/20 rounded-xl p-6 overflow-x-auto">
+        <table class="w-full text-left text-sm table-auto border-collapse">
+          <thead>
+            <tr class="text-gray-600 dark:text-gray-300 border-b border-gray-300">
+              <th class="py-2 px-4">Activity</th>
+              <th class="py-2 px-4">Time</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="py-3 px-4">Journal</td>
+              <td class="py-3 px-4">6 PM</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Start Session Button -->
+    <div class="transition-opacity duration-1000"
+      [ngClass]="{ 'opacity-100': startVisible, 'opacity-0': !startVisible }">
+      <button
+        class="bg-gradient-to-r from-cyan-400 to-sky-500 text-white text-sm sm:text-base md:text-lg font-semibold px-4 sm:px-5 md:px-6 py-2 sm:py-2.5 md:py-3 rounded-full shadow-md hover:scale-105 transition duration-300 max-w-xs"
+        (click)="openSessionSelector()"
+      >
+        Start Session
+      </button>
+    </div>
+  </div>
+
+  <app-session-selector
+    *ngIf="showSelector"
+    (close)="closeSelector()"
+    (selectSession)="navigateToSession($event)"
+  ></app-session-selector>
+</div>
