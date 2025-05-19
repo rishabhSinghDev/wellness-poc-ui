@@ -33,7 +33,7 @@ export class StretchSessionComponent implements AfterViewInit, OnDestroy {
   showSummary = false;
 
   ngAfterViewInit(): void {
-    this.startCamera();
+    // this.startCamera();
     window.addEventListener('keydown', this.handleKeyPress); // simulate thumbs-up via spacebar
   }
 

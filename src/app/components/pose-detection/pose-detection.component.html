@@ -1,0 +1,10 @@
+<div class="video-container">
+  <img [src]="'data:image/jpeg;base64,' + currentFrame" *ngIf="currentFrame">
+  <div class="landmarks" *ngIf="landmarks">
+    <div *ngFor="let landmark of landmarks"
+          class="landmark"
+          [style.left.px]="landmark[1]"
+          [style.top.px]="landmark[2]">
+    </div>
+  </div>
+</div>
