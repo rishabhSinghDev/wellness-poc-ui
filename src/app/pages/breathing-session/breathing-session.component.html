@@ -1,120 +1,68 @@
-<!-- <div
-  class="min-h-screen bg-gradient-to-br from-sky-100 to-white dark:from-gray-800 dark:to-gray-900 text-gray-800 dark:text-white flex flex-col items-center justify-center p-6">
-
-  <div class="text-center bg-white dark:bg-gray-800 p-6 rounded-xl shadow-xl max-w-md w-full">
-    <h2 class="text-2xl font-bold mb-2">🧘‍♀️ Box Breathing</h2>
-    <p class="text-sm mb-4 text-gray-600 dark:text-gray-300">
-      Headphones Recommended. Breathe in deeply, hold, and relax.
-    </p>
-
-    <div *ngIf="!sessionStarted && !showSummaryCard" class="mt-4">
-      <button class="bg-cyan-500 text-white px-6 py-2 rounded-full shadow hover:bg-cyan-600 transition"
-        (click)="startCountdown()">
-        Start Breathing Session
-      </button>
-    </div>
-
-    <div *ngIf="sessionStarted" class="mt-6">
-      <div
-        class="w-40 h-40 mx-auto rounded-full flex items-center justify-center text-xl font-bold text-white transition-all duration-1000 ease-in-out"
-        [ngClass]="{
-        'inhale-animation bg-cyan-400 shadow-lg shadow-cyan-500': currentPhase === 'Inhale',
-        'hold-phase bg-red-500': currentPhase === 'Hold',
-        'exhale-animation bg-indigo-400': currentPhase === 'Exhale'
-      }">
-        {{ currentPhase }}
-      </div>
-    </div>
-
-    <p class="mt-4 text-lg font-medium">Time Left: {{ breathingTimeLeft }}s</p>
-
-
-    <div *ngIf="!sessionStarted && countdown > 0" class="mt-6 text-xl font-semibold">
-      {{ promptText }}
-    </div>
-  </div>
-
-  <app-session-summary *ngIf="showSummaryCard" [duration]="60" [reps]="0"></app-session-summary>
-  <div class="mt-6">
-    <a routerLink="/" class="text-sm text-cyan-600 dark:text-cyan-400 hover:underline">
-      ← Back to Home
-    </a>
-  </div>
-</div> -->
-
-<div
+=<div
   class="min-h-screen bg-[#fefefe] dark:bg-[#1e1e2f] text-[#4a4a4a] dark:text-[#f4f4f4] px-6 py-10 flex flex-col items-center gap-10 font-sans">
-
-  <!-- Back -->
-  <!-- <button routerLink="/" class="self-start text-sm text-sky-500 underline hover:text-sky-700 transition">
-    ← Back to Home
-  </button> -->
 
   <!-- Title -->
   <h1 class="text-3xl md:text-4xl font-semibold tracking-wide animate-fade-in-up text-center">
     Breathing Session
   </h1>
 
-  <!-- Session Card -->
-  <div
-    class="w-full max-w-2xl bg-white/10 dark:bg-white/10 backdrop-blur-xl shadow-xl ring-1 ring-white/20 border border-white/20 rounded-xl p-8 flex flex-col items-center gap-6 animate-fade-in-up">
+  <!-- Main Card -->
+  <ng-container *ngIf="!showSummaryCard">
+    <div
+      class="w-full max-w-2xl bg-white/10 dark:bg-white/10 backdrop-blur-xl shadow-xl ring-1 ring-white/20 border border-white/20 rounded-xl p-8 flex flex-col items-center gap-6 animate-fade-in-up">
 
-    <!-- Headphones Note -->
-    <p class="text-center text-base md:text-lg text-sky-600 dark:text-sky-400 font-medium">
-      🎧 For the best experience, please use headphones
-    </p>
+      <p class="text-center text-base md:text-lg text-sky-600 dark:text-sky-400 font-medium">
+        🎧 Use headphones for best experience
+      </p>
 
-    <p class="text-center text-sm md:text-base text-slate-600 dark:text-slate-300 max-w-md">
-      This is a guided box breathing session. Follow the animation and instructions.
-    </p>
+      <p class="text-center text-sm md:text-base text-slate-600 dark:text-slate-300 max-w-md">
+        This is a guided breathing session. Follow the animation and relax.
+      </p>
 
-    <!-- Start Button -->
-    <button *ngIf="!sessionStarted && countdown === 0 && !showSummaryCard" (click)="startCountdown()"
-      class="bg-gradient-to-r from-cyan-400 to-sky-500 text-white text-base md:text-lg font-semibold px-6 py-3 rounded-full shadow-md hover:scale-105 transition duration-300 max-w-fit">
-      Start Session
-    </button>
+      <button *ngIf="!sessionStarted && countdown === 0" (click)="startCountdown()"
+        class="bg-gradient-to-r from-cyan-400 to-sky-500 text-white text-base font-semibold px-6 py-3 rounded-full shadow-md hover:scale-105 transition duration-300 max-w-fit">
+        Start Session
+      </button>
 
-    <!-- Countdown -->
-    <div *ngIf="countdown > 0 && !sessionStarted" class="text-4xl font-bold text-cyan-600">
-      {{ countdown }}
-    </div>
+      <div *ngIf="countdown > 0 && !sessionStarted" class="text-4xl font-bold text-cyan-600">
+        {{ countdown }}
+      </div>
 
-    <!-- Breathing Phase Circle -->
-    <div *ngIf="sessionStarted" class="flex flex-col items-center gap-4">
-      <!-- <div
-        class="rounded-full flex items-center justify-center text-white font-semibold transition-all duration-1000 ease-in-out"
-        [ngClass]="{
-          'w-36 h-36 bg-cyan-400 shadow-cyan-500': currentPhase === 'Inhale',
-          'w-28 h-28 bg-red-500 shadow-red-500': currentPhase === 'Hold',
-          'w-16 h-16 bg-indigo-500 shadow-indigo-500': currentPhase === 'Exhale'
+      <!-- Animated Circle -->
+      <div *ngIf="sessionStarted" class="flex flex-col items-center gap-8">
+        <!-- <div
+        class="transition-transform duration-[4000ms] ease-in-out rounded-full flex items-center justify-center text-white font-semibold shadow-xl"
+        [ngStyle]="{
+          width: '150px',
+          height: '150px',
+          transform: scale,
+          backgroundColor: currentColor,
+          boxShadow: '0 0 25px ' + currentColor
         }">
-        {{ currentPhase }}
+        {{ currentPhase.replace('1', '').replace('2', '') }}
       </div> -->
-      <div
-  class="transition-transform duration-[4000ms] ease-in-out rounded-full flex items-center justify-center text-white font-semibold shadow-xl"
-  [ngClass]="{
-    'scale-75': currentPhase === 'Inhale' && scaleState === 'small',
-    'scale-125': currentPhase === 'Inhale' && scaleState === 'normal',
-    'scale-125 bg-red-500 shadow-red-500': currentPhase === 'Hold' && previousPhase === 'Inhale',
-    'scale-75 bg-indigo-500 shadow-indigo-500': currentPhase === 'Exhale',
-    'scale-75 bg-red-500 shadow-red-500': currentPhase === 'Hold' && previousPhase === 'Exhale'
-  }"
-  [class.bg-cyan-400]="currentPhase === 'Inhale'"
-  [class.shadow-cyan-500]="currentPhase === 'Inhale'"
-  style="width: 150px; height: 150px;">
-  {{ currentPhase }}
-</div>
+        <div
+          class="rounded-full flex items-center justify-center text-white font-semibold shadow-xl transition-all duration-[100ms] ease-in-out"
+          [ngStyle]="{
+    width: circleSize + 'px',
+    height: circleSize + 'px',
+    backgroundColor: currentColor,
+    boxShadow: '0 0 25px ' + currentColor
+  }">
+          {{ currentPhase }}
+        </div>
 
+        <p class="mt-4 text-base text-slate-500 dark:text-slate-300">
+          Time Left: {{ breathingTimeLeft }}s
+        </p>
+      </div>
 
-
-      <p class="text-sm text-slate-500 dark:text-slate-300">Time Left: {{ breathingTimeLeft }}s</p>
+      <a routerLink="/home" class="mt-4 text-sm text-cyan-600 dark:text-cyan-400 hover:underline">
+        ← Back to Home
+      </a>
     </div>
-    <a routerLink="/" class="mt-6 inline-block text-sm text-cyan-600 hover:underline dark:text-cyan-400">
-      ← Back to Home
-    </a>
-  </div>
+  </ng-container>
 
-  <!-- Summary -->
-  <app-session-summary *ngIf="showSummaryCard" [duration]="60" [reps]="0" (close)="closeSummary()">
-  </app-session-summary>
+  <app-session-summary *ngIf="showSummaryCard" [duration]="60" [reps]="0"
+    (close)="closeSummary()"></app-session-summary>
 </div>

@@ -1,34 +1,40 @@
 <div
-    class="min-h-screen bg-gradient-to-br from-pink-100 to-white dark:from-gray-800 dark:to-gray-900 text-gray-800 dark:text-white flex flex-col items-center justify-center p-6">
+    class="min-h-screen bg-[#fefefe] dark:bg-[#1e1e2f] text-[#4a4a4a] dark:text-[#f4f4f4] px-6 py-10 flex flex-col items-center justify-center font-sans">
 
-    <div *ngIf="!submitted" class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-xl max-w-xl w-full text-center">
-        <h2 class="text-2xl font-bold mb-4">📓 Journal Prompt</h2>
-        <p class="mb-4 text-sm text-gray-600 dark:text-gray-300">
-            What was the most eventful thing in the last 24 hours?
-        </p>
+    <div
+        class="w-full max-w-xl bg-white/10 dark:bg-white/10 backdrop-blur-xl shadow-xl ring-1 ring-white/20 border border-white/20 rounded-xl p-8 flex flex-col items-center gap-6 animate-fade-in-up">
 
-        <textarea [(ngModel)]="journalText" rows="6" placeholder="Type your thoughts here..."
-            class="w-full p-4 rounded-lg border border-gray-300 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-cyan-500 bg-gray-50 dark:bg-gray-700 text-gray-800 dark:text-white"></textarea>
+        <ng-container *ngIf="!completed">
+            <h1 class="text-2xl md:text-3xl font-semibold text-center text-slate-800 dark:text-white">
+                📝 Journal Session
+            </h1>
 
-        <button (click)="submitted = true"
-            class="mt-4 bg-cyan-500 text-white px-6 py-2 rounded-full hover:bg-cyan-600 transition">
-            Submit
-        </button>
-    </div>
+            <p class="text-center text-sm md:text-base text-slate-600 dark:text-slate-300 max-w-md">
+                {{ prompts[currentPromptIndex] }}
+            </p>
+            <textarea [(ngModel)]="currentAnswer" placeholder="Type your reflection here..." rows="5" class="w-full p-4 rounded-lg border border-white/30 backdrop-blur-md shadow-md resize-none focus:outline-none focus:ring-2 focus:ring-sky-400 dark:focus:ring-cyan-500
+         bg-white text-gray-800 placeholder-gray-500
+         dark:bg-[#2d2d2d] dark:text-white dark:placeholder-gray-400 text-sm md:text-base">
+</textarea>
+            <button (click)="submitAnswer()"
+                class="bg-gradient-to-r from-cyan-400 to-sky-500 text-white text-base md:text-lg font-semibold px-6 py-3 rounded-full shadow-md hover:scale-105 transition duration-300 max-w-fit">
+                Next
+            </button>
+        </ng-container>
 
-    <div *ngIf="submitted" class="flex flex-col items-center">
-        <ng-lottie [options]="{
-          path: 'assets/lottie/thumbs-up.json'
-        }" style="width: 200px; height: 200px;"></ng-lottie>
+        <ng-container *ngIf="completed">
+            <ng-lottie [options]="{ path: 'assets/lottie/thumbs-up.json' }" style="width: 200px; height: 200px;"
+                class="mx-auto mb-4">
+            </ng-lottie>
+            <p class="text-lg md:text-xl font-semibold text-cyan-600 dark:text-cyan-400 text-center">
+                Great job reflecting! You've completed all prompts. 🌟
+            </p>
+        </ng-container>
 
-        <p class="text-lg font-semibold mt-4">Thank you for journaling today ✨</p>
-
-        <!-- <app-session-summary
-        [duration]="0"
-        [reps]="0"
-      ></app-session-summary> -->
-        <a routerLink="/" class="mt-4 text-sm text-cyan-600 dark:text-cyan-400 hover:underline">
-            ← Back to Home
-        </a>
+        <div class="w-full flex justify-center pt-4">
+            <a routerLink="/home" class="text-sm text-sky-600 hover:underline dark:text-cyan-400">
+                ← Back to Home
+            </a>
+        </div>
     </div>
 </div>

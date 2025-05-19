@@ -5,6 +5,7 @@ import {
   OnDestroy,
   ViewChild
 } from '@angular/core';
+import { markSessionCompleted } from 'src/app/utils/session-storage.util';
 
 @Component({
   selector: 'app-stretch-session',
@@ -13,6 +14,7 @@ import {
 })
 export class StretchSessionComponent implements AfterViewInit, OnDestroy {
   @ViewChild('webcamRef') webcamRef!: ElementRef<HTMLVideoElement>;
+  @ViewChild('videoRef') videoElement!: ElementRef<HTMLVideoElement>;
   private stream: MediaStream | null = null;
 
   sessionStarted = false;
@@ -79,6 +81,7 @@ export class StretchSessionComponent implements AfterViewInit, OnDestroy {
   startSession(): void {
     this.sessionStarted = true;
     this.promptText = 'Session Started!';
+    this.videoElement.nativeElement.play();
     this.intervalId = setInterval(() => {
       if (this.timeLeft > 0) {
         this.timeLeft--;
@@ -95,6 +98,13 @@ export class StretchSessionComponent implements AfterViewInit, OnDestroy {
         // Show summary card after short delay
         setTimeout(() => {
           this.showSummaryCard = true;
+          // const completed = JSON.parse(sessionStorage.getItem('completedTasks') || '[]');
+          // completed.push({ activity: 'Stretch', time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) });
+          // sessionStorage.setItem('completedTasks', JSON.stringify(completed));
+          markSessionCompleted('Stretch');
+          this.videoElement.nativeElement.pause();
+          this.videoElement.nativeElement.currentTime = 0;
+
         }, 1000);
       }
     }, 1000);

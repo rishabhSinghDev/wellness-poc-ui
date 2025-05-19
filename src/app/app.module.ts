@@ -16,6 +16,7 @@ import { LottieModule } from 'ngx-lottie';
 import player from 'lottie-web';
 import { SessionSelectorComponent } from './components/session-selector/session-selector.component';
 import { FormsModule } from '@angular/forms';
+import { NamePromptComponent } from './pages/name-prompt/name-prompt.component';
 
 export function playerFactory() {
   return player;
@@ -33,7 +34,8 @@ export function playerFactory() {
     StartSessionButtonComponent,
     SessionSummaryComponent,
     ModeToggleComponent,
-    SessionSelectorComponent
+    SessionSelectorComponent,
+    NamePromptComponent
   ],
   imports: [
     BrowserModule,

@@ -8,4 +8,10 @@ import { Component, Input } from '@angular/core';
 export class SessionSummaryComponent {
   @Input() duration: number = 60;
   @Input() reps: number = 0;
+
+  userName: string = '';
+
+  ngOnInit(): void {
+    this.userName = sessionStorage.getItem('userName') || 'friend';
+  }
 }

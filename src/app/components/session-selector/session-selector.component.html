@@ -1,4 +1,4 @@
-<div class="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50" (click)="close.emit()">
+<!-- <div class="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50" (click)="close.emit()">
   <div class="bg-white dark:bg-gray-900 p-6 rounded-xl shadow-2xl w-full max-w-md text-center animate-fade-in-up"
     (click)="$event.stopPropagation()">
     <h2 class="text-xl font-bold mb-4 text-gray-800 dark:text-white">Choose Your Session</h2>
@@ -25,4 +25,40 @@
       Cancel
     </button>
   </div>
+</div> -->
+<!-- session-selector.component.html -->
+<div
+  class="fixed inset-0 bg-gray-300/30 dark:bg-gray-900/20 backdrop-blur-sm flex items-center justify-center z-50"
+  (click)="close.emit()"
+>
+  <div
+    class="bg-white/30 dark:bg-white/5 backdrop-blur-xl shadow-2xl ring-1 ring-white/20 border border-white/20 rounded-2xl p-8 w-full max-w-md mx-4 text-center animate-fade-in-up"
+    (click)="$event.stopPropagation()"
+  >
+    <h2 class="text-xl md:text-2xl font-semibold mb-6 text-slate-800 dark:text-white">
+      🌿 Choose Your Session
+    </h2>
+
+    <div class="flex flex-col gap-4">
+      <button
+        (click)="handleSelection('stretch')"
+        class="w-full px-6 py-3 rounded-full bg-cyan-500 text-white text-sm md:text-base font-medium hover:bg-cyan-600 transition duration-200 shadow-md"
+      >
+        🧘 Stretch
+      </button>
+      <button
+        (click)="handleSelection('breathing')"
+        class="w-full px-6 py-3 rounded-full bg-indigo-500 text-white text-sm md:text-base font-medium hover:bg-indigo-600 transition duration-200 shadow-md"
+      >
+        🌬️ Breathe
+      </button>
+      <button
+        (click)="handleSelection('journal')"
+        class="w-full px-6 py-3 rounded-full bg-emerald-500 text-white text-sm md:text-base font-medium hover:bg-emerald-600 transition duration-200 shadow-md"
+      >
+        ✍️ Journal
+      </button>
+    </div>
+  </div>
 </div>
+

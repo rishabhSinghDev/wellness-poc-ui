@@ -2,6 +2,7 @@ import { Router } from '@angular/router';
 import { AnimationOptions } from 'ngx-lottie';
 import { Component, HostListener } from '@angular/core';
 import { trigger, transition, style, animate } from '@angular/animations';
+import { getCompletedSessions, CompletedSession } from 'src/app/utils/session-storage.util';
 
 @Component({
   selector: 'app-home',
@@ -19,32 +20,72 @@ import { trigger, transition, style, animate } from '@angular/animations';
 export class HomeComponent {
   showSelector = false;
 
-  // Animation state flags
   greetingVisible = false;
   completedVisible = false;
   upcomingVisible = false;
   startVisible = false;
+  firstVisit = true;
 
+  userName: string = '';
+  showNamePrompt: boolean = false;
+  enteredName: string = '';
+
+  // completedTasks: { activity: string; time: string }[] = [];
+  // upcomingTasks: { activity: string; time: string }[] = [];
+
+  // allCompletedTasks = [
+  //   { activity: 'Stretch', time: '5 PM' },
+  //   { activity: 'Breathing', time: '6 PM' },
+  //   { activity: 'Journal', time: '7 PM' }
+  // ]; // mock data that is already present by default
+
+  allCompletedTasks: CompletedSession[] = [
+    { activity: 'Stretch', time: '5 PM' },
+    { activity: 'Breathing', time: '6 PM' },
+    { activity: 'Journal', time: '7 PM' },
+  ];
+
+  completedTasks: CompletedSession[] = [];
+  upcomingTasks = [
+    { activity: 'Stretch', time: '8 PM' },
+    { activity: 'Breathing', time: '9 PM' },
+    { activity: 'Journal', time: '10 PM' }
+  ];
 
   constructor(private router: Router) { }
 
   ngOnInit(): void {
-    // Staggered fade-ins
-    setTimeout(() => {
+    const newSessions = getCompletedSessions(); // from sessionStorage
+
+    newSessions.forEach(session => {
+        this.allCompletedTasks.push(session);
+    });
+
+    // Final completedTasks to show
+    this.completedTasks = [...this.allCompletedTasks];
+
+
+    const alreadySeen = sessionStorage.getItem('hasSeenHome');
+    const storedName = sessionStorage.getItem('userName');
+
+    this.userName = storedName || 'friend';
+    this.firstVisit = !alreadySeen;
+
+    if (this.firstVisit) {
+      setTimeout(() => {
+        sessionStorage.setItem('hasSeenHome', 'true');
+      }, 4000);
+
+      setTimeout(() => (this.greetingVisible = true), 500);
+      setTimeout(() => (this.completedVisible = true), 1500);
+      setTimeout(() => (this.upcomingVisible = true), 2500);
+      setTimeout(() => (this.startVisible = true), 3500);
+    } else {
       this.greetingVisible = true;
-    }, 100);
-
-    setTimeout(() => {
       this.completedVisible = true;
-    }, 1400);
-
-    setTimeout(() => {
       this.upcomingVisible = true;
-    }, 2800);
-
-    setTimeout(() => {
       this.startVisible = true;
-    }, 4000);
+    }
   }
 
   lottieOptions: AnimationOptions = {
@@ -71,7 +112,4 @@ export class HomeComponent {
 
     this.router.navigate([routeMap[type] || '/']);
   }
-
-
-
 }
