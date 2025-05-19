@@ -1,27 +1,69 @@
-# WellnessPoc
+# 🧘 Wellness POC UI – Angular Frontend
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.2.16.
+This is the minimalist, beautifully animated frontend for the **AI Wellness Companion** hackathon project.
 
-## Development server
+---
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+## 📦 Tech Stack
 
-## Code scaffolding
+- **Angular 16**
+- **TailwindCSS** – for styling
+- **Lottie** – for animations
+- **AOS** – scroll animations
+- **ngx-lottie** – Angular wrapper for Lottie
+- **TypeScript**, SCSS
+- Fully responsive and dark mode enabled 🌙
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+---
 
-## Build
+## 🧰 Prerequisites
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+Make sure these are installed on your system before setup:
 
-## Running unit tests
+| Tool        | Version              |
+|-------------|----------------------|
+| Node.js     | 18.x (LTS) ✅        |
+| npm         | 9 or above ✅        |
+| Angular CLI | 16.x ✅              |
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+Install Angular CLI if not already:
 
-## Running end-to-end tests
+```bash
+npm install -g @angular/cli@16
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
 
-## Further help
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+## 📂 Project Structure (Key Components)
+src/
+├── app/
+│   ├── home/                     # Homepage UI + scroll animations
+│   ├── stretch-session/         # Camera + exercise UI + video feed
+│   ├── breathing-session/       # Breathing circle animation
+│   ├── journal-session/         # Journaling input + lottie avatar
+│   ├── components/
+│   │   ├── mode-toggle/          # Dark/light theme toggle
+│   │   ├── session-summary/      # Stats card after session
+│   │   └── session-selector/     # Start session modal
+
+
+
+
+## 📦 Installed Dependencies
+
+You don’t need to install these manually — just run npm install and it’ll pull from package.json.
+
+But here’s what we’re using:
+
+# Tailwind CSS
+npm install -D tailwindcss postcss autoprefixer
+
+# Lottie Animation Support
+npm install lottie-web ngx-lottie@11.0.1 --legacy-peer-deps
+
+# Scroll Animation
+npm install aos
+
+# Angular Forms
+npm install @angular/forms
+
+
