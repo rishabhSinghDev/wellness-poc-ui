@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -17,6 +18,7 @@ import player from 'lottie-web';
 import { SessionSelectorComponent } from './components/session-selector/session-selector.component';
 import { FormsModule } from '@angular/forms';
 import { NamePromptComponent } from './pages/name-prompt/name-prompt.component';
+import { LoadingComponent } from './loading/loading.component';
 
 export function playerFactory() {
   return player;
@@ -35,13 +37,15 @@ export function playerFactory() {
     SessionSummaryComponent,
     ModeToggleComponent,
     SessionSelectorComponent,
-    NamePromptComponent
+    NamePromptComponent,
+    LoadingComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     LottieModule.forRoot({ player: playerFactory }),
-    FormsModule
+    FormsModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

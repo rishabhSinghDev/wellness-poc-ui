@@ -13,6 +13,7 @@ body {
     opacity: 0;
     transform: translateY(20px);
   }
+
   100% {
     opacity: 1;
     transform: translateY(0);
@@ -21,4 +22,96 @@ body {
 
 .animate-fade-in-up {
   animation: fade-in-up 2s ease-out both;
+}
+
+@keyframes fadeScale {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes ring-fill {
+  from {
+    stroke-dashoffset: 100;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+.animate-ring-fill {
+  animation: ring-fill 1s ease-out forwards;
+}
+
+@layer utilities {
+  @keyframes rain-in {
+    0% {
+      opacity: 0;
+      transform: translateY(-30px) scale(0.8);
+    }
+
+    100% {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+
+  .animate-rain {
+    animation: rain-in 0.5s ease-out forwards;
+  }
+
+  @keyframes fill-in {
+    0% {
+      background: transparent;
+      transform: scale(0.8);
+      opacity: 0;
+    }
+
+    100% {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+
+  .animate-fill-ring {
+    animation: fill-in 0.5s ease-out forwards;
+  }
+
+  @keyframes drop-in {
+    0% {
+      opacity: 0;
+      transform: translateY(-80px);
+    }
+
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .animate-drop {
+    animation: drop-in 0.8s ease-in-out forwards;
+  }
+
+  @keyframes fillPie {
+    0% {
+      stroke-dashoffset: 314;
+      transform: scale(0.9);
+      opacity: 0;
+    }
+
+    100% {
+      stroke-dashoffset: 0;
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+
+  .animate-pie {
+    animation: fillPie 1s ease-out forwards;
+  }
 }

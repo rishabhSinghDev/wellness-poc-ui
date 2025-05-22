@@ -10,7 +10,7 @@
             </h1>
 
             <p class="text-center text-sm md:text-base text-slate-600 dark:text-slate-300 max-w-md">
-                {{ prompts[currentPromptIndex] }}
+                {{ prompt }}
             </p>
             <textarea [(ngModel)]="currentAnswer" placeholder="Type your reflection here..." rows="5" class="w-full p-4 rounded-lg border border-white/30 backdrop-blur-md shadow-md resize-none focus:outline-none focus:ring-2 focus:ring-sky-400 dark:focus:ring-cyan-500
          bg-white text-gray-800 placeholder-gray-500
@@ -18,7 +18,7 @@
 </textarea>
             <button (click)="submitAnswer()"
                 class="bg-gradient-to-r from-cyan-400 to-sky-500 text-white text-base md:text-lg font-semibold px-6 py-3 rounded-full shadow-md hover:scale-105 transition duration-300 max-w-fit">
-                Next
+                Submit
             </button>
         </ng-container>
 
@@ -27,7 +27,7 @@
                 class="mx-auto mb-4">
             </ng-lottie>
             <p class="text-lg md:text-xl font-semibold text-cyan-600 dark:text-cyan-400 text-center">
-                Great job reflecting! You've completed all prompts. 🌟
+                Great job reflecting! See you next time {{storedName}}. 🌟
             </p>
         </ng-container>
 

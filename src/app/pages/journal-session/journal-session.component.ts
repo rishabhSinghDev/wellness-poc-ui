@@ -1,3 +1,4 @@
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { markSessionCompleted } from 'src/app/utils/session-storage.util';
 
@@ -7,33 +8,30 @@ import { markSessionCompleted } from 'src/app/utils/session-storage.util';
   styleUrls: ['./journal-session.component.scss']
 })
 export class JournalSessionComponent {
-  prompts = [
-    "What was the most meaningful moment in the last 24 hours?",
-    "Is there something you're grateful for today?",
-    "What challenge did you overcome recently?",
-    "What's one thing you want to improve tomorrow?"
-  ];
-
-  currentPromptIndex = 0;
+  constructor(private httpClient : HttpClient) {}
+  storedName = sessionStorage.getItem('userName');
+  prompt = `Hey ${this.storedName}, How's it going?`;
   currentAnswer = '';
-  answers: string[] = [];
   completed = false;
 
   submitAnswer() {
     if (this.currentAnswer.trim()) {
-      this.answers.push(this.currentAnswer.trim());
-      this.currentAnswer = '';
-      if (this.currentPromptIndex < this.prompts.length - 1) {
-        this.currentPromptIndex++;
-      } else {
-        this.completed = true;
-        // const completed = JSON.parse(sessionStorage.getItem('completedTasks') || '[]');
-        // completed.push({ activity: 'Journal', time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) });
-        // sessionStorage.setItem('completedTasks', JSON.stringify(completed));
-        markSessionCompleted('Journal');
+      const headers = new HttpHeaders({
+        'Content-Type': 'application/json',
+      });
 
-        // Optional: You could send answers to backend here.
-      }
+      const payload = {
+        userText: this.currentAnswer.trim()
+      };
+
+      this.httpClient.post('http://localhost:5270/api/Ai',payload, {headers}).subscribe((response) => {
+        if(response)
+        {
+          console.log("Journal entry successful", response);
+        }
+      });
+        this.completed = true;
+        // backend logic here
     }
   }
 }
