@@ -19,6 +19,7 @@ import { SessionSelectorComponent } from './components/session-selector/session-
 import { FormsModule } from '@angular/forms';
 import { NamePromptComponent } from './pages/name-prompt/name-prompt.component';
 import { LoadingComponent } from './loading/loading.component';
+import { PoseDetectionComponent } from './components/pose-detection/pose-detection.component';
 
 export function playerFactory() {
   return player;
@@ -38,7 +39,8 @@ export function playerFactory() {
     ModeToggleComponent,
     SessionSelectorComponent,
     NamePromptComponent,
-    LoadingComponent
+    LoadingComponent,
+    PoseDetectionComponent
   ],
   imports: [
     BrowserModule,
