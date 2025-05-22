@@ -6,7 +6,7 @@ import { Component, Input } from '@angular/core';
   styleUrls: ['./session-summary.component.scss']
 })
 export class SessionSummaryComponent {
-  @Input() duration: number = 60;
+  @Input() duration: number = 30;
   @Input() reps: number = 0;
 
   userName: string = '';

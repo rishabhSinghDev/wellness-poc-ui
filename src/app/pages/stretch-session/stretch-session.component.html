@@ -1,62 +1,27 @@
-<!-- <div
-  class="min-h-screen bg-gradient-to-br from-[#e0f7fa] to-[#ffffff] text-gray-800 dark:from-gray-800 dark:to-gray-900 dark:text-white px-4 py-6 flex flex-col md:flex-row gap-8 items-center justify-center"> -->
-
-<!-- Left: Webcam Feed + Overlay Stats -->
-<!-- <div class="w-full md:w-1/2 bg-white dark:bg-gray-800 p-4 rounded-xl shadow-xl relative">
-    <div class="absolute top-3 left-4 bg-black/60 text-white text-sm px-3 py-1 rounded-md">
-      Reps: <span class="font-semibold">{{ repsCompleted }}</span>
-    </div>
-    <div class="absolute top-3 right-4 bg-black/60 text-white text-sm px-3 py-1 rounded-md">
-      Time: <span class="font-semibold">{{ timeLeft }}s</span>
-    </div>
-
-    <video #webcamRef autoplay muted playsinline
-      class="w-full rounded-lg aspect-video border-2 border-cyan-400 shadow-lg"></video>
-    <div class="w-full text-center mt-4">
-      <p
-        class="text-lg md:text-xl font-semibold bg-white/90 dark:bg-gray-800/90 text-gray-800 dark:text-white px-6 py-3 rounded-lg shadow transition-all">
-        {{ promptText }}
-      </p>
-    </div>
-  </div> -->
-
-<!-- Right: Avatar Demo Video -->
-<!-- <div class="w-full md:w-1/2 text-center flex flex-col items-center justify-between">
-    <video autoplay muted loop playsinline class="rounded-xl shadow-xl w-full max-w-md border border-cyan-300">
-      <source src="assets/videos/stretch-demo.mp4" type="video/mp4" />
-      Your browser does not support the video tag.
-    </video>
-
-    <p class="mt-4 text-gray-600 dark:text-gray-300 text-sm">
-      Watch and follow the model above
-    </p>
-
-    <button *ngIf="!sessionStarted && !countdownStarted"
-      class="mt-4 bg-cyan-500 text-white px-4 py-2 rounded-full shadow-md hover:bg-cyan-600 transition"
-      (click)="simulateThumbsUp()">
-      Simulate Thumbs Up 👍
-    </button>
-    <button *ngIf="sessionStarted" (click)="simulateRep()"
-      class="mt-4 bg-green-500 text-white px-4 py-2 rounded-full shadow hover:bg-green-600 transition">
-      Simulate Rep +1
-    </button>
-    <a routerLink="/" class="mt-6 inline-block text-sm text-cyan-600 hover:underline dark:text-cyan-400">
-      ← Back to Home
-    </a>
-  </div>
-
-  <app-session-summary *ngIf="showSummaryCard" [duration]="60" [reps]="repsCompleted"></app-session-summary>
-</div> -->
 <div
   class="min-h-screen bg-[#fefefe] dark:bg-[#1e1e2f] text-[#4a4a4a] dark:text-[#f4f4f4] px-6 py-10 flex flex-col items-center gap-10 font-sans">
 
-  <!-- Back to Home -->
-  <!-- <button routerLink="/" class="self-start text-sm text-sky-500 underline hover:text-sky-700 transition">
-    ← Back to Home
-  </button> -->
+  <!-- Title and Exercise Selector -->
+  <div class="w-full max-w-6xl flex flex-col items-center gap-8">
+    <h1 class="text-3xl md:text-4xl font-semibold tracking-wide animate-fade-in-up text-center mb-2">
+      Stretching Session
+    </h1>
 
-  <!-- Title -->
-  <h1 class="text-3xl md:text-4xl font-semibold tracking-wide animate-fade-in-up">Stretching Session</h1>
+    <!-- Exercise Selector -->
+    <div class="exercise-selector-container" [class.disabled]="sessionStarted && !showSummaryCard">
+      <div class="exercise-selector">
+        <div class="slider-background" [ngStyle]="{'transform': getSliderPosition()}"></div>
+        <button *ngFor="let exercise of exercises"
+          (click)="onExerciseChange(exercise.id)"
+          [class.selected]="selectedExercise === exercise.id"
+          [class.disabled]="sessionStarted && !showSummaryCard"
+          [title]="(sessionStarted && !showSummaryCard) ? 'Cannot change exercise during an active session' : ''"
+          class="exercise-button">
+          {{ exercise.name }}
+        </button>
+      </div>
+    </div>
+  </div>
 
   <!-- Main Area -->
   <div class="flex flex-col md:flex-row items-center justify-center gap-8 w-full max-w-6xl">
@@ -65,18 +30,28 @@
     <div
       class="relative flex flex-col gap-4 items-center bg-white/10 dark:bg-white/10 backdrop-blur-xl shadow-xl ring-1 ring-white/20 border border-white/20 rounded-xl p-6 w-full md:w-1/2 animate-fade-in-up">
 
-      <!-- Reps and Timer -->
-      <div class="absolute top-4 left-4 bg-black/60 text-white text-xs px-3 py-1 rounded-md shadow">
-        Reps: <span class="font-semibold">{{ repsCompleted }}</span>
-      </div>
-      <div class="absolute top-4 right-4 bg-black/60 text-white text-xs px-3 py-1 rounded-md shadow">
-        Time: <span class="font-semibold">{{ timeLeft }}s</span>
+      <!-- Stats Bar -->
+      <div class="flex justify-between w-full mb-4 gap-4">
+        <!-- Reps Counter -->
+        <div class="flex-1 bg-black/40 backdrop-blur-xl rounded-xl p-4 flex flex-col items-center justify-center">
+          <div class="text-3xl font-bold text-white mb-1">{{ repsCompleted }}</div>
+          <div class="text-xs uppercase tracking-wider text-gray-300">Reps</div>
+        </div>
+
+        <!-- Timer -->
+        <div class="flex-1 bg-black/40 backdrop-blur-xl rounded-xl p-4 flex flex-col items-center justify-center">
+          <div class="text-3xl font-bold text-white mb-1">{{ timeLeft }}</div>
+          <div class="text-xs uppercase tracking-wider text-gray-300">Seconds Left</div>
+        </div>
       </div>
 
       <!-- Video Feed -->
-      <!-- <video #webcamRef autoplay muted playsinline
-        class="w-full rounded-lg aspect-video border-2 border-cyan-400 shadow-lg"></video> -->
-      <app-pose-detection></app-pose-detection>
+      <app-pose-detection
+        [isSessionCompleted]="isSessionCompleted"
+        (repCountChange)="onRepsCompleted($event)"
+        (workoutStarted)="startSession()"
+        (exerciseTypeChange)="onExerciseTypeChange($event)">
+      </app-pose-detection>
 
       <!-- Prompt -->
       <div class="w-full text-center mt-4">
@@ -97,23 +72,10 @@
 
       <!-- <video autoplay muted loop playsinline -->
       <video #videoRef muted loop playsinline
-        class="rounded-xl shadow-xl w-full max-w-md border border-cyan-300">
+        class="rounded-xl shadow-xl w-full border border-cyan-300">
         <source src="assets/videos/jumping-jack.mp4" type="video/mp4" />
         Your browser does not support the video tag.
       </video>
-
-      <!-- Simulate Thumbs Up / Rep -->
-      <button *ngIf="!sessionStarted && !countdownStarted"
-        class="mt-4 bg-cyan-500 text-white px-4 py-2 rounded-full shadow-md hover:bg-cyan-600 transition"
-        (click)="simulateThumbsUp()">
-        Simulate Thumbs Up 👍
-      </button>
-
-      <button *ngIf="sessionStarted"
-        class="mt-4 bg-green-500 text-white px-4 py-2 rounded-full shadow hover:bg-green-600 transition"
-        (click)="simulateRep()">
-        Simulate Rep +1
-      </button>
 
       <a routerLink="/home" class="mt-6 inline-block text-sm text-cyan-600 hover:underline dark:text-cyan-400">
         ← Back to Home

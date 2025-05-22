@@ -2,7 +2,10 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { webSocket, WebSocketSubject } from 'rxjs/webSocket';
 import { environment } from 'src/environments/environment';
+import { IFrameResponse } from '../models/frame-response.interface';
 
+
+export type ExerciseType = 'squats' | 'neck_rotation' | 'hand_raise';
 
 @Injectable({
   providedIn: 'root'
@@ -16,11 +19,15 @@ export class PoseDetectionService {
     this.socket$ = webSocket(this.wsUrl);
   }
 
-  getPoseData(): Observable<any> {
+  getPoseData(): Observable<IFrameResponse> {
     return this.socket$.asObservable();
   }
 
   closeConnection() {
     this.socket$.complete();
+  }
+
+  selectExercise(exercise: ExerciseType) {
+    this.socket$.next({ exercise });
   }
 }

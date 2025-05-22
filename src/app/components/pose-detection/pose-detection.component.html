@@ -1,10 +1,21 @@
 <div class="video-container">
+  <!-- Placeholder when no webcam -->
+  <div class="webcam-placeholder" *ngIf="!currentFrame">
+    <svg class="placeholder-avatar" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+      <path d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"/>
+    </svg>
+    <div class="loading-text">Setting up camera...</div>
+  </div>
+
+  <!-- Webcam feed -->
   <img [src]="'data:image/jpeg;base64,' + currentFrame" *ngIf="currentFrame">
-  <div class="landmarks" *ngIf="landmarks">
-    <div *ngFor="let landmark of landmarks"
-          class="landmark"
-          [style.left.px]="landmark[1]"
-          [style.top.px]="landmark[2]">
-    </div>
+
+  <!-- Overlays -->
+  <div class="rep-overlay" *ngIf="showRepAnimation" [@repCountAnimation]>
+    <div class="rep-count">+1</div>
+  </div>
+
+  <div class="session-start-overlay" *ngIf="showSessionStarted" [@sessionStartAnimation]>
+    <div class="session-start-text">Session Started</div>
   </div>
 </div>
