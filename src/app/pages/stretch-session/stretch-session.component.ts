@@ -46,6 +46,13 @@ export class StretchSessionComponent implements AfterViewInit, OnDestroy {
 
   selectedExercise: ExerciseType = 'squats';
 
+  // Add video sources for each exercise
+  private videoSources: { [key in ExerciseType]: string } = {
+    squats: 'assets/videos/squats.mp4',
+    neck_rotation: 'assets/videos/neck-rotation.mp4',
+    hand_raise: 'assets/videos/hand-raise.mp4'
+  };
+
   private audioPlayer: HTMLAudioElement = new Audio();
   private audioCache: { [key: string]: HTMLAudioElement } = {};
   private audioTimestamps = [0, 10, 15, 20, 25, 26, 27, 28, 29, 30];
@@ -91,6 +98,10 @@ export class StretchSessionComponent implements AfterViewInit, OnDestroy {
     this.sessionStarted = true;
     this.isSessionCompleted = false;
     this.promptText = 'Session Started!';
+
+    // Set the video source based on selected exercise
+    this.videoElement.nativeElement.src = this.videoSources[this.selectedExercise];
+    this.videoElement.nativeElement.load();
     this.videoElement.nativeElement.play();
 
     // Play start audio
@@ -108,7 +119,7 @@ export class StretchSessionComponent implements AfterViewInit, OnDestroy {
           }
 
           if (this.timeLeft === 15) {
-            this.promptText = 'You’re halfway there!';
+            this.promptText = 'You\'re almost there!';
           } else if (this.timeLeft === 10) {
             this.promptText = 'Just 10 more seconds!';
           }
@@ -117,7 +128,7 @@ export class StretchSessionComponent implements AfterViewInit, OnDestroy {
           this.isSessionCompleted = true;
           clearInterval(this.intervalId);
 
-          // Play completion audio after 2 second delay
+          // Play completion audio after 1 second delay
           setTimeout(() => {
             this.playAudioForTimestamp(30);
           }, 2000);
@@ -128,7 +139,7 @@ export class StretchSessionComponent implements AfterViewInit, OnDestroy {
             markSessionCompleted('Stretch');
             this.videoElement.nativeElement.pause();
             this.videoElement.nativeElement.currentTime = 0;
-          }, 3000); // Show summary 1 second after completion audio
+          }, 2000); // Show summary 1 second after completion audio
         }
       }, 1000);
     }, 2000); // 2 second delay before starting the timer
@@ -169,6 +180,11 @@ export class StretchSessionComponent implements AfterViewInit, OnDestroy {
     if (!this.sessionStarted || this.showSummaryCard) {
       this.selectedExercise = exercise;
       this.poseDetectionService.selectExercise(exercise);
+      // Update video source when exercise changes
+      if (this.videoElement) {
+        this.videoElement.nativeElement.src = this.videoSources[exercise];
+        this.videoElement.nativeElement.load();
+      }
     }
   }
 
@@ -176,6 +192,11 @@ export class StretchSessionComponent implements AfterViewInit, OnDestroy {
     if (!this.sessionStarted) {  // Only update if session hasn't started
       this.selectedExercise = exercise;
       this.poseDetectionService.selectExercise(exercise);
+      // Update video source when exercise changes
+      if (this.videoElement) {
+        this.videoElement.nativeElement.src = this.videoSources[exercise];
+        this.videoElement.nativeElement.load();
+      }
     }
   }
 
@@ -208,5 +229,10 @@ export class StretchSessionComponent implements AfterViewInit, OnDestroy {
 
   ngAfterViewInit(): void {
     window.addEventListener('keydown', this.handleKeyPress);
+    // Set initial video source
+    if (this.videoElement) {
+      this.videoElement.nativeElement.src = this.videoSources[this.selectedExercise];
+      this.videoElement.nativeElement.load();
+    }
   }
 }

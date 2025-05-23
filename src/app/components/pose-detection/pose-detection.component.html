@@ -1,14 +1,17 @@
 <div class="video-container">
   <!-- Placeholder when no webcam -->
   <div class="webcam-placeholder" *ngIf="!currentFrame">
-    <svg class="placeholder-avatar" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-      <path d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"/>
-    </svg>
-    <div class="loading-text">Setting up camera...</div>
+    <div class="placeholder-content">
+      <svg class="placeholder-avatar" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+        <path d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"/>
+      </svg>
+      <div class="loading-text">Waiting for camera feed...</div>
+      <div class="loading-subtext">Please ensure your camera is connected and permissions are granted</div>
+    </div>
   </div>
 
   <!-- Webcam feed -->
-  <img [src]="'data:image/jpeg;base64,' + currentFrame" *ngIf="currentFrame">
+  <img [src]="'data:image/jpeg;base64,' + currentFrame" *ngIf="currentFrame" class="webcam-feed">
 
   <!-- Overlays -->
   <div class="rep-overlay" *ngIf="showRepAnimation" [@repCountAnimation]>
