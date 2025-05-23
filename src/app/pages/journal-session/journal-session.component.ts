@@ -1,8 +1,36 @@
 import { Component, NgZone, OnDestroy } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { LoadingService } from 'src/app/loading/loading.service';
 
 declare var webkitSpeechRecognition: any;
 declare var SpeechRecognition: any;
+
+enum Emotion {
+  Happy = 0,
+  Sad = 1,
+  Angry = 2,
+  Neutral = 3,
+  Unknown = 4,
+}
+interface JournalApiResponse {
+  id: number;
+  timestamp: string;
+  text: string;
+  emotion: number;
+  summary: string;
+}
+
+function emotionToEmoji(emotion: Emotion): string {
+  switch (emotion) {
+    case Emotion.Happy: return '😊';
+    case Emotion.Sad: return '😢';
+    case Emotion.Angry: return '😡';
+    case Emotion.Neutral:
+    case Emotion.Unknown:
+      return '😐';
+    default: return '😐';
+  }
+}
 
 @Component({
   selector: 'app-journal-session',
@@ -21,7 +49,10 @@ export class JournalSessionComponent implements OnDestroy {
   interimTranscript = '';
   silenceTimer: any;
 
-  constructor(private zone: NgZone, private httpClient: HttpClient) {
+  emotionValue: Emotion = Emotion.Unknown;
+  summaryText = '';
+
+  constructor(private zone: NgZone, private httpClient: HttpClient, private loadingService: LoadingService) {
     const SpeechRecognitionConstructor = window.hasOwnProperty('webkitSpeechRecognition')
       ? webkitSpeechRecognition
       : SpeechRecognition;
@@ -108,18 +139,48 @@ export class JournalSessionComponent implements OnDestroy {
     this.isSubmit = true;
     this.stopRecording();
     if (this.currentAnswer.trim()) {
+      this.loadingService.show();
       const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
       const payload = { userText: this.currentAnswer.trim() };
 
-      this.httpClient.post('http://localhost:5270/api/Ai', payload, { headers }).subscribe({
+      // this.httpClient.post('http://localhost:5270/api/Ai', payload, { headers }).subscribe({
+      //   next: (response : JournalApiResponse) => {
+      //     // this.apiResponseMessage = response.text || '';
+      //     this.summaryText = response.summary || '';
+      //     this.emotionValue = response.emotion;
+      //     this.completed = true;
+      //     this.loadingService.hide();
+      //   },
+      //   error: (err) => {
+      //     console.error("Failed to submit journal", err);
+      //     this.loadingService.hide();
+      //   }
+      // });
+
+      this.httpClient.post<JournalApiResponse>('http://localhost:5270/api/Ai', payload, { headers }).subscribe({
         next: (response) => {
-          console.log("Journal entry submitted", response);
+          // this.apiResponseMessage = response.text || '';
+          this.summaryText = response.summary || '';
+          this.emotionValue = response.emotion;
           this.completed = true;
+          this.loadingService.hide();
         },
         error: (err) => {
           console.error("Failed to submit journal", err);
+          this.loadingService.hide();
         }
       });
+    }
+  }
+  emotionToEmoji(emotion: Emotion): string {
+    switch (emotion) {
+      case Emotion.Happy: return '😊';
+      case Emotion.Sad: return '😢';
+      case Emotion.Angry: return '😡';
+      case Emotion.Neutral:
+      case Emotion.Unknown:
+        return '😐';
+      default: return '😐';
     }
   }
 

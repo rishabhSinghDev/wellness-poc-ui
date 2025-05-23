@@ -19,7 +19,7 @@ import player from 'lottie-web';
 import { SessionSelectorComponent } from './components/session-selector/session-selector.component';
 import { FormsModule } from '@angular/forms';
 import { NamePromptComponent } from './pages/name-prompt/name-prompt.component';
-import { LoadingComponent } from './loading/loading.component';
+import { LoadingScreenComponent } from './loading/loading.component';
 import { PoseDetectionComponent } from './components/pose-detection/pose-detection.component';
 
 export function playerFactory() {
@@ -40,7 +40,7 @@ export function playerFactory() {
     ModeToggleComponent,
     SessionSelectorComponent,
     NamePromptComponent,
-    LoadingComponent,
+    LoadingScreenComponent,
     PoseDetectionComponent
   ],
   imports: [

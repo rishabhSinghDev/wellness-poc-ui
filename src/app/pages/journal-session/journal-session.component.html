@@ -34,9 +34,17 @@
         </ng-container>
 
         <ng-container *ngIf="completed">
-            <ng-lottie [options]="{ path: 'assets/lottie/thumbs-up.json' }" style="width: 200px; height: 200px;"
-                class="mx-auto mb-4">
-            </ng-lottie>
+            <div
+                class="text-center text-base md:text-lg text-white/90 dark:text-slate-300 font-medium animate-fade-in-up px-4 space-y-2">
+
+                <p>
+                    <strong>Emotion:</strong> {{ emotionToEmoji(emotionValue) }}
+                </p>
+
+                <p>
+                    <strong>Summary:</strong> {{ summaryText }}
+                </p>
+            </div>
             <p class="text-lg md:text-xl font-semibold text-cyan-600 dark:text-cyan-400 text-center">
                 Great job reflecting! See you next time {{storedName}}. 🌟
             </p>
