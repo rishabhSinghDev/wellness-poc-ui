@@ -157,7 +157,7 @@ export class JournalSessionComponent implements OnDestroy {
       //   }
       // });
 
-      this.httpClient.post<JournalApiResponse>('http://localhost:5270/api/Ai', payload, { headers }).subscribe({
+      this.httpClient.post<JournalApiResponse>('http://localhost:5275/api/Ai', payload, { headers }).subscribe({
         next: (response) => {
           // this.apiResponseMessage = response.text || '';
           this.summaryText = response.summary || '';

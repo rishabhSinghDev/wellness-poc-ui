@@ -244,7 +244,7 @@ export class HomeComponent {
   }
 
   fetchJournalSummary() {
-    this.httpClient.get<JournalEntry[]>('http://localhost:5266/api/Ai').subscribe((entries: any) => {
+    this.httpClient.get<JournalEntry[]>('http://localhost:5275/api/Ai').subscribe((entries: any) => {
       const grouped: {
         [key: string]: {
           mood: string;
