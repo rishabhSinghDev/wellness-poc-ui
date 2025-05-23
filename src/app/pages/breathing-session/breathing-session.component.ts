@@ -10,7 +10,7 @@ export class BreathingSessionComponent {
   sessionStarted = false;
   showSummaryCard = false;
   countdown = 0;
-  breathingTimeLeft = 60;
+  breathingTimeLeft = 15;
 
   currentPhase = 'Inhale';
   scale = 'scale(1)';
@@ -41,7 +41,7 @@ export class BreathingSessionComponent {
     this.sessionStarted = true;
     this.audio.loop = true;
     this.audio.play();
-    this.breathingTimeLeft = 60;
+    this.breathingTimeLeft = 15;
     this.currentPhase = 'Inhale';
     this.runPhase(this.currentPhase);
 
@@ -66,44 +66,6 @@ export class BreathingSessionComponent {
     }
   }
 
-  // runPhase(phase: string) {
-  //   if (this.colorInterval) clearInterval(this.colorInterval);
-
-  //   if (phase === 'Inhale') {
-  //     this.scale = 'scale(1)'; // Start small
-  //     this.animateColor('#81e6d9', '#234e52'); // Light teal → deep teal
-  //     setTimeout(() => this.scale = 'scale(1.25)', 50); // Expand
-  //   }
-
-  //   else if (phase === 'Exhale') {
-  //     this.scale = 'scale(1.25)'; // Start large
-  //     this.animateColor('#234e52', '#81e6d9'); // Deep teal → light teal
-  //     setTimeout(() => this.scale = 'scale(0.75)', 50); // Contract
-  //   }
-
-  //   else {
-  //     this.scale = this.scale; // Hold
-  //   }
-  // }
-  // runPhase(phase: string) {
-  //   if (this.colorInterval) clearInterval(this.colorInterval);
-
-  //   if (phase === 'Inhale') {
-  //     this.scale = 'scale(1)'; // Start small
-  //     this.animateColor('#81e6d9', '#234e52'); // Light teal → deep teal
-  //     setTimeout(() => this.scale = 'scale(1.25)', 300); // ⏳ Delay shape change
-  //   }
-
-  //   else if (phase === 'Exhale') {
-  //     this.scale = 'scale(1.25)'; // Start large
-  //     this.animateColor('#234e52', '#81e6d9'); // Deep teal → light teal
-  //     setTimeout(() => this.scale = 'scale(0.75)', 300); // ⏳ Delay shape change
-  //   }
-
-  //   else {
-  //     this.scale = this.scale; // Hold: no change
-  //   }
-  // }
   runPhase(phase: string) {
     if (this.colorInterval) clearInterval(this.colorInterval);
 
@@ -118,23 +80,6 @@ export class BreathingSessionComponent {
     }
   }
 
-
-  // animateColor(from: string, to: string) {
-  //   const fromRGB = this.hexToRgb(from);
-  //   const toRGB = this.hexToRgb(to);
-  //   let step = 0;
-  //   const steps = 40;
-  //   const duration = 4000 / steps;
-
-  //   this.colorInterval = setInterval(() => {
-  //     const r = Math.round(fromRGB.r + (toRGB.r - fromRGB.r) * step / steps);
-  //     const g = Math.round(fromRGB.g + (toRGB.g - fromRGB.g) * step / steps);
-  //     const b = Math.round(fromRGB.b + (toRGB.b - fromRGB.b) * step / steps);
-  //     this.currentColor = `rgb(${r}, ${g}, ${b})`;
-  //     step++;
-  //     if (step > steps) clearInterval(this.colorInterval);
-  //   }, duration);
-  // }
   animateColorTransition(fromColor: string, toColor: string, fromSize: number, toSize: number) {
     const from = this.hexToRgb(fromColor);
     const to = this.hexToRgb(toColor);
@@ -185,9 +130,6 @@ export class BreathingSessionComponent {
     this.audio.currentTime = 0;
     this.showSummaryCard = true;
     this.sessionStarted = false;
-    // const completed = JSON.parse(sessionStorage.getItem('completedTasks') || '[]');
-    // completed.push({ activity: 'Breathe', time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) });
-    // sessionStorage.setItem('completedTasks', JSON.stringify(completed));
     markSessionCompleted('Breathing');
 
   }
